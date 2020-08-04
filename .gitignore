@@ -20,7 +20,11 @@
 
 # node_modules
 node_modules/
+package-lock.json
 
 # egg.js Runtime
 run/
 logs/
+
+# upload files
+app/upload/

@@ -11,7 +11,7 @@ module.exports = appInfo => {
                     return `[${meta.date}] ${meta.message}`;
                 },
                 contextFormatter(meta) {
-                    return `[${meta.date}] [${meta.ctx.method} ${meta.ctx.path}] ${meta.ctx.status} User-Agent: ${meta.ctx.request.req.headers["user-agent"]}`;
+                    return `[${meta.date}] [${meta.ctx.method} ${meta.ctx.path}] ${meta.ctx.status} User-Agent: ${meta.ctx.request.req.headers["user-agent"]} ${meta.message}`;
                 },
             }
         },
@@ -30,6 +30,18 @@ module.exports = appInfo => {
             },
             app: true,
             agent: false,
+        },
+        multipart: {
+            mode: 'stream',
+            whitelist: [
+              // images
+              '.png',
+              '.jpg',
+              '.gif',
+              '.bmp',
+              // notes
+              '.md',
+            ]
         }
     }
 }

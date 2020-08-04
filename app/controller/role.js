@@ -1,8 +1,9 @@
+const BaseController = require('./base');
 
-exports.create = async () => { };
+class RoleController extends BaseController {
+  get table() {
+    return "roles";
+  }
+}
 
-exports.show = async () => { };
-
-exports.update = async () => { };
-
-exports.destroy = async () => { };
+module.exports = RoleController;

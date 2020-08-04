@@ -1,6 +1,10 @@
 const Controller = require('egg').Controller;
 
 class BaseController extends Controller {
+    async index() {
+        this.ctx.body = await this.ctx.service.base.index(this.table);
+    }
+
     async create() {
         this.ctx.body = await this.ctx.service.base.create(this.table);
     }

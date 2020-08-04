@@ -1,8 +1,9 @@
+const BaseController = require('./base');
 
-exports.create = async () => { };
+class PostLikeController extends BaseController {
+  get table() {
+    return "postLikes";
+  }
+}
 
-exports.show = async () => { };
-
-exports.update = async () => { };
-
-exports.destroy = async () => { };
+module.exports = PostLikeController;

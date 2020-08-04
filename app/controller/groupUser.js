@@ -1,8 +1,9 @@
+const BaseController = require('./base');
 
-exports.create = async () => { };
+class GroupUserController extends BaseController {
+  get table() {
+    return "groupUsers";
+  }
+}
 
-exports.show = async () => { };
-
-exports.update = async () => { };
-
-exports.destroy = async () => { };
+module.exports = GroupUserController;

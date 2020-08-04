@@ -1,8 +1,9 @@
+const BaseController = require('./base');
 
-exports.create = async () => { };
+class PostController extends BaseController {
+  get table() {
+    return "posts";
+  }
+}
 
-exports.show = async () => { };
-
-exports.update = async () => { };
-
-exports.destroy = async () => { };
+module.exports = PostController;

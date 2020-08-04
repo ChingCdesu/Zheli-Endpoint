@@ -2,18 +2,20 @@ module.exports = () => {
     return async function (ctx, next) {
         let query = ctx.request.query;
 
-        if (!ctx.request.path.startsWith("/api/user")) {
-            const token = query.token;
-            const userId = query.userId;
+        const token = query.token;
+        const user = query.user;
 
-            const correctToken = await ctx.service.token.get(userId);
-
+        if (ctx.request.path !== "/api/user") {
+            const correctToken = await ctx.service.token.get(user);
             if (correctToken === null || token !== correctToken) {
+                ctx.status = 403;
                 return;
-            } else {
-                ctx.headers.nextToken = await ctx.service.token.generate(userId);
             }
         }
         await next();
+        if (ctx.body.retCode === 0) {
+            const nextToken = await ctx.service.token.generate(user);
+            ctx.set('token', nextToken);
+        }
     }
 };

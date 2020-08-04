@@ -1,5 +1,5 @@
 const Service = require('egg').Service;
-const sha256 = require('js-sha256');
+const sha256 = require("js-sha256");
 
 class TokenService extends Service {
   async get(uid) {
@@ -14,16 +14,16 @@ class TokenService extends Service {
   async generate(uid) {
     let token = null;
     try {
-      var hash = sha224.create();
+      var hash = sha256.create();
       hash.update(Date.now().toLocaleString() + Math.random().toFixed(5));
-      token = hash.hex();
+      token = hash.hex().substring(0, 128);
       const row = {
         id: uid,
         token: token,
       };
       this.app.mysql.update('users', row);
     } catch (e) {
-
+      this.ctx.logger.error(e);
     }
     return token;
   }

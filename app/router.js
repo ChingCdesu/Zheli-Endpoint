@@ -14,5 +14,5 @@ module.exports = app => {
     router.resources('videoComment', '/api/videoComment', controller.videoComment);
     router.resources('post', '/api/post', controller.post);
     router.resources('postLike', '/api/postLike', controller.postLike);
-    router.post('/api/user/confirm', controller.user.confirm);
+    router.post('/upload/:type', controller.file.upload);
 };
