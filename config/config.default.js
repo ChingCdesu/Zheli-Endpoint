@@ -26,7 +26,7 @@ module.exports = appInfo => {
                 port: '3306',
                 user: 'root',
                 password: 'Lyy19990123',
-                database: '2020-contest',
+                database: 'zheli',
             },
             app: true,
             agent: false,
