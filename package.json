@@ -12,6 +12,7 @@
   "dependencies": {
     "egg": "^2.27.0",
     "egg-mysql": "^3.0.0",
+    "egg-scripts": "^2.13.0",
     "egg-validate": "^2.0.2",
     "js-sha256": "^0.9.0"
   },
