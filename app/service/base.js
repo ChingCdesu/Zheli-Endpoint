@@ -9,6 +9,17 @@ class BaseService extends Service {
         ctx.request.body[field] = this.app.mysql.literals.now;
       }
     }
+    delete ctx.request.body.endpoint;
+    delete ctx.request.query.endpoint;
+
+    for (const bodyKey in ctx.request.body) {
+      if (ctx.request.body[bodyKey] === undefined || ctx.request.body[bodyKey] === null || ctx.request.body[bodyKey] === "")
+        delete ctx.request.body[bodyKey];
+    }
+    for (const queryKey in ctx.request.query) {
+      if (ctx.request.query[queryKey] === undefined || ctx.request.query[queryKey] === null || ctx.request.query[queryKey] === "")
+        delete ctx.request.query[queryKey];
+    }
   }
 
   // confirm
@@ -18,7 +29,7 @@ class BaseService extends Service {
     let data = null;
     try {
       const result = await this.app.mysql.select(table, {
-        where: this.ctx.request.body,
+        where: this.ctx.request.query,
         columns: [ 'ID' ]
       });
       if (result.length !== 0) {
@@ -26,10 +37,13 @@ class BaseService extends Service {
           count: result.length,
           values: result
         };
+      } else {
+        retCode = 21;
+        message = codes[21];
       }
     } catch (e) {
       retCode = e.code || e.errno || 90;
-      message = e.sqlMessage || codes[retCode === 90 ? 0 : retCode] || e.message || codes[90];
+      message = e.sqlMessage || e.message || codes[retCode] || codes[90];
     }
     return { 'retCode': retCode, 'message': message, 'data': data };
   }
@@ -50,7 +64,7 @@ class BaseService extends Service {
       }
     } catch (e) {
       retCode = e.code || e.errno || 90;
-      message = e.sqlMessage || codes[retCode === 90 ? 0 : retCode] || e.message || codes[90];
+      message = e.sqlMessage || e.message || codes[retCode] || codes[90];
     }
     return { 'retCode': retCode, 'message': message, 'data': data };
   }
@@ -67,7 +81,7 @@ class BaseService extends Service {
       }
     } catch (e) {
       retCode = e.code || e.errno || 90;
-      message = e.sqlMessage || codes[retCode === 90 ? 0 : retCode] || e.message || codes[90];
+      message = e.sqlMessage || e.message || codes[retCode] || codes[90];
     }
     return { 'retCode': retCode, 'message': message, 'data': data };
   }
@@ -77,7 +91,6 @@ class BaseService extends Service {
     let message = 'Success';
     let data = null;
     try {
-      this.ctx.validate({id: {type: 'id', required: true}});
       const result = await this.app.mysql.update(table, this.ctx.request.body);
       if (result.affectedRows !== 1) {
         retCode = 90;
@@ -85,7 +98,7 @@ class BaseService extends Service {
       }
     } catch (e) {
       retCode = e.code || e.errno || 90;
-      message = e.sqlMessage || codes[retCode === 90 ? 0 : retCode] || e.message || codes[90];
+      message = e.sqlMessage || e.message || codes[retCode] || codes[90];
     }
     return { 'retCode': retCode, 'message': message, 'data': data };
   }
@@ -102,7 +115,7 @@ class BaseService extends Service {
       }
     } catch (e) {
       retCode = e.code || e.errno || 90;
-      message = e.sqlMessage || codes[retCode === 90 ? 0 : retCode] || e.message || codes[90];
+      message = e.sqlMessage || e.message || codes[retCode] || codes[90];
     }
     return { 'retCode': retCode, 'message': message, 'data': data };
   }

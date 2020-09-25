@@ -22,10 +22,12 @@ class TokenService extends Service {
         token: token,
       };
       this.app.mysql.update('users', row);
+      return token;
     } catch (e) {
       this.ctx.logger.error(e);
+      return null;
     }
-    return token;
+
   }
 }
 

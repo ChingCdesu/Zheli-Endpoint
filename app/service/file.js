@@ -15,7 +15,7 @@ class FileService extends Service {
       const stream = await ctx.getFileStream();
 
       const filename = stream.filename;
-      const name = 'app/upload/' + type + '/' + path.basename(filename);
+      const name = 'app/public/upload/' + type + '/' + path.basename(filename);
 
       // process file
       await new Promise((resolve, reject) => {
