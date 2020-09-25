@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Endpoint of Zheli App",
   "scripts": {
-    "dev": "egg-bin dev"
+    "dev": "egg-bin dev",
+    "start": "egg-scripts start --daemon",
+    "stop": "egg-scripts stop"
   },
   "author": "ChingC",
   "license": "",
