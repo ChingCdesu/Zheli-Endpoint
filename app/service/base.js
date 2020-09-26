@@ -30,7 +30,7 @@ class BaseService extends Service {
     try {
       const result = await this.app.mysql.select(table, {
         where: this.ctx.request.query,
-        columns: [ 'ID' ]
+        columns: ['ID'],
       });
       if (result.length !== 0) {
         data = {
@@ -60,7 +60,7 @@ class BaseService extends Service {
         retCode = 90;
         message = codes[90];
       } else {
-        data = {id: result.insertId};
+        data = { id: result.insertId };
       }
     } catch (e) {
       retCode = e.code || e.errno || 90;
@@ -122,7 +122,7 @@ class BaseService extends Service {
 
   async _getFieldsRule(table) {
     const fields = await this.app.mysql.select('information_schema.COLUMNS', {
-      where: {table_name: table, table_schema: this.app.config.mysql.client.database},
+      where: { table_name: table, table_schema: this.app.config.mysql.client.database },
       columns: ['COLUMN_NAME', 'IS_NULLABLE', 'COLUMN_DEFAULT', 'DATA_TYPE', 'EXTRA'],
     });
 
@@ -131,8 +131,8 @@ class BaseService extends Service {
       ret[value['COLUMN_NAME']] = {
         type: value['DATA_TYPE'].toLowerCase().replace(new RegExp(/^(varchar)|(datetime)$/), 'string'),
         required: value['IS_NULLABLE'] !== 'YES' &&
-                  value['COLUMN_DEFAULT'] === null &&
-                  value['EXTRA'] !== 'auto_increment',
+          value['COLUMN_DEFAULT'] === null &&
+          value['EXTRA'] !== 'auto_increment',
       }
     });
     return ret;

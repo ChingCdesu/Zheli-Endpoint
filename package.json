@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "egg-bin dev",
     "start": "egg-scripts start --daemon",
-    "stop": "egg-scripts stop"
+    "stop": "egg-scripts stop",
+    "debug": "npm run dev --debug"
   },
   "author": "ChingC",
   "license": "",
