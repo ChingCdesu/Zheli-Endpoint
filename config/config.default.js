@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = appInfo => {
     return {
-        middleware: ['log', 'token'],
+        middleware: ['log'],
         keys: "mykey",
         customLogger: {
             requestLogger: {
@@ -34,13 +34,13 @@ module.exports = appInfo => {
         multipart: {
             mode: 'stream',
             whitelist: [
-              // images
-              '.png',
-              '.jpg',
-              '.gif',
-              '.bmp',
-              // notes
-              '.md',
+                // images
+                '.png',
+                '.jpg',
+                '.gif',
+                '.bmp',
+                // notes
+                '.md',
             ]
         },
         cluster: {

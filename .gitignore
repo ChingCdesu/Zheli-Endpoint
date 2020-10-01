@@ -27,4 +27,5 @@ run/
 logs/
 
 # upload files
-app/upload/
+app/public/upload/
+app/public/assets/
