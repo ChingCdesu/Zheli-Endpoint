@@ -2,7 +2,10 @@ const path = require('path');
 
 module.exports = appInfo => {
     return {
-        middleware: ['log'],
+        middleware: [
+            'log',
+            'token',
+        ],
         keys: "mykey",
         customLogger: {
             requestLogger: {

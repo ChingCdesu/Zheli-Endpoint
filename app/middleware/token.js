@@ -1,9 +1,9 @@
 module.exports = () => {
   return async function (ctx, next) {
-    let query = ctx.request.query;
+    const headers = ctx.request.headers;
 
-    const token = query.token;
-    const user = query.user;
+    const token = headers.token;
+    const user = headers.user;
 
     if (ctx.request.path.startsWith('/public')) {
       await next();
@@ -20,13 +20,10 @@ module.exports = () => {
       }
     }
 
-    delete ctx.request.query.token;
-    delete ctx.request.query.user;
-
     await next();
-    // if (ctx.body.retCode === 0) {
-    const nextToken = await ctx.service.token.generate(user || ctx.body.data.values[0].id);
-    ctx.set('token', nextToken);
-    // }
+    if (ctx.body.retCode === 0) {
+      const nextToken = await ctx.service.token.generate(user || ctx.body.data.values[0].id);
+      ctx.set('token', nextToken);
+    }
   }
 };

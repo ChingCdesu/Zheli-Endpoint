@@ -32,6 +32,7 @@ class BaseService extends Service {
         where: this.ctx.request.query,
         columns: ['ID'],
       });
+      console.log(this.ctx.request.query);
       if (result.length !== 0) {
         data = {
           count: result.length,

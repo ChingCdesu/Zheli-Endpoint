@@ -2,9 +2,9 @@ module.exports = app => {
     const { router, controller } = app;
     // 添加static中间件
     const index = app.config.coreMiddleware.indexOf('static');
-    // const validate = app.middleware.token();
+    const validate = app.middleware.token();
     const log = app.middleware.log();
-    // app.middleware.splice(index, 0, validate);
+    app.middleware.splice(index, 0, validate);
     app.middleware.splice(index, 0, log);
 
     router.resources('note', '/api/note', controller.note);
