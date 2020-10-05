@@ -10,7 +10,13 @@ module.exports = () => {
       return;
     }
 
-    if (ctx.request.path !== "/api/user") {
+    if (ctx.request.path === "/api/user") {
+      await next();
+      if (ctx.body.retCode === 0) {
+        const nextToken = await ctx.service.token.generate(ctx.body.data.values[0]['ID']);
+        ctx.set('token', nextToken);
+      }
+    } else {
       const correctToken = await ctx.service.token.get(user);
       console.log(`CorrectToken: ${correctToken}`);
       console.log(`QueryToken: ${token}`);
@@ -18,11 +24,8 @@ module.exports = () => {
         ctx.status = 403;
         return;
       }
-    }
-
-    await next();
-    if (ctx.body.retCode === 0) {
-      const nextToken = await ctx.service.token.generate(user || ctx.body.data.values[0].id);
+      await next();
+      const nextToken = await ctx.service.token.generate(user || ctx.body.data.values[0]['ID']);
       ctx.set('token', nextToken);
     }
   }
